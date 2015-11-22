@@ -144,7 +144,7 @@ final class ArcanistExternalJsonLinter extends ArcanistLinter {
       return;
     }
 
-    $messages = json_decode($output, true);
+    $messages = phutil_json_decode($output, true);
 
     foreach ($messages as $message) {
       if (!empty($message['throw'])) {
@@ -257,7 +257,7 @@ final class ArcanistExternalJsonLinter extends ArcanistLinter {
     );
 
     if (idx($message, 'severity')) {
-      $severity_name = strtolower(idx($message, 'severity'));
+      $severity_name = phutil_utf8_strtolower(idx($message, 'severity'));
       if (!idx($map, $severity_name)) {
         throw new ArcanistUsageException(
           pht('%s: Unknown severity %s', __CLASS__, $severity_name));
