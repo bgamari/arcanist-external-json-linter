@@ -8,7 +8,11 @@
  */
 phutil_register_library_map(array(
   '__library_version__' => 2,
-  'class' => array(),
+  'class' => array(
+    'ArcanistExternalJsonLinter' => 'src/ArcanistExternalJsonLinter.php',
+  ),
   'function' => array(),
-  'xmap' => array(),
+  'xmap' => array(
+    'ArcanistExternalJsonLinter' => 'ArcanistLinter',
+  ),
 ));
