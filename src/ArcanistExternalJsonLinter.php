@@ -169,28 +169,31 @@ final class ArcanistExternalJsonLinter extends ArcanistLinter {
           $char = null;
       }
 
-      $dict = array(
-        'path'        => idx($message, 'file', $path),
-        'line'        => $line,
-        'char'        => $char,
-        'code'        => idx($message, 'code', $this->getLinterName()),
-        'severity'    => $this->getMessageSeverity($message),
-        'name'        => idx($message, 'name', 'Lint'),
-        'description' => idx($message, 'message',
-                             pht('Undefined Lint Message')),
-      );
+      $path = idx($message, 'file', $path);
+      $code = idx($message, 'code', $this->getLinterName());
+      $severity = $this->getMessageSeverity($message);
+      $name = idx($message, 'name', 'Lint');
+      $description = idx($message, 'message', pht('Undefined Lint Message'));
+
+      $lint = id(new ArcanistLintMessage())
+        ->setPath($path)
+        ->setLine($line)
+        ->setChar($char)
+        ->setCode($this->getLinterName())
+        ->setSeverity($severity)
+        ->setName($name)
+        ->setDescription($description);
 
       $original = idx($message, 'original');
       if ($original !== null) {
-        $dict['original'] = $original;
+        $lint->setOriginalText($originalText);
       }
 
       $replacement = idx($message, 'replacement');
       if ($replacement !== null) {
-        $dict['replacement'] = $replacement;
+        $lint->setReplacementText($replacement);
       }
 
-      $lint = ArcanistLintMessage::newFromDictionary($dict);
       $this->addLintMessage($lint);
     }
   }
