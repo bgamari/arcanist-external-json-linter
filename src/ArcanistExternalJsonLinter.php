@@ -179,14 +179,14 @@ final class ArcanistExternalJsonLinter extends ArcanistLinter {
         ->setPath($path)
         ->setLine($line)
         ->setChar($char)
-        ->setCode($this->getLinterName())
+        ->setCode($code)
         ->setSeverity($severity)
         ->setName($name)
         ->setDescription($description);
 
       $original = idx($message, 'original');
       if ($original !== null) {
-        $lint->setOriginalText($originalText);
+        $lint->setOriginalText($original);
       }
 
       $replacement = idx($message, 'replacement');
